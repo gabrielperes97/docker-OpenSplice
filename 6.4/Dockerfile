@@ -1,4 +1,4 @@
-FROM airdock/oracle-jdk:jdk-1.7
+FROM airdock/oracle-jdk:jdk-1.8
 
 #Copying OpenSplice to image
 ADD OpenSpliceDDS6.4/install/HDE /opt/HDE

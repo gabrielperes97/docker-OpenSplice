@@ -50,4 +50,5 @@ then
 	echo "Second make Failed"
 	exit 6
 fi
+echo "Make succeffuly"
 exit 0
