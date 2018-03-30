@@ -1,13 +1,15 @@
+FROM alpine:latest as unpacker
+
+WORKDIR /root
+
+# Downloading and unpacking
+RUN wget https://github.com/ADLINK-IST/opensplice/releases/download/OSPL_V6_7_171127OSS_RELEASE/PXXX-VortexOpenSplice-6.7.171127OSS-HDE-x86_64.linux-gcc5.4.0-glibc2.23-installer.tar.gz \
+	&& tar -xzvf PXXX-VortexOpenSplice-6.7.171127OSS-HDE-x86_64.linux-gcc5.4.0-glibc2.23-installer.tar.gz
+
 FROM airdock/oracle-jdk:jdk-1.8
 
-#Copying OpenSplice to image
-WORKDIR /opt/
-RUN apt-get update && apt-get install -y wget
-RUN wget https://github.com/ADLINK-IST/opensplice/releases/download/OSPL_V6_7_171127OSS_RELEASE/PXXX-VortexOpenSplice-6.7.171127OSS-HDE-x86_64.linux-gcc5.4.0-glibc2.23-installer.tar.gz \
-	&& tar -xzvf PXXX-VortexOpenSplice-6.7.171127OSS-HDE-x86_64.linux-gcc5.4.0-glibc2.23-installer.tar.gz \
-	&& rm PXXX-VortexOpenSplice-6.7.171127OSS-HDE-x86_64.linux-gcc5.4.0-glibc2.23-installer.tar.gz
-
-WORKDIR /root/
+#Copying OpenSplice from unpacker
+COPY --from=unpacker /root/HDE /opt/HDE
 
 # Setting environment variables
 ENV OSPL_HOME /opt/HDE/x86_64.linux
